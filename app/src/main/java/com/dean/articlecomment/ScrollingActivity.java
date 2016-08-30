@@ -87,7 +87,7 @@ public class ScrollingActivity extends AppCompatActivity {
 
 
         mRecyclerView.setLayoutManager(layoutManager);
-//        mRecyclerView.setNestedScrollingEnabled(false);
+        mRecyclerView.setNestedScrollingEnabled(false);
         mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.Pacman);
 
 //        WebView webView = new WebView(this);

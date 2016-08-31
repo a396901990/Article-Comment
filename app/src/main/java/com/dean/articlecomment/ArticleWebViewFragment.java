@@ -11,7 +11,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 /**
- * Created by DeanGuo on 2/18/16.
+ * Created by DeanGuo on 8/18/16.
  */
 public class ArticleWebViewFragment extends Fragment {
 

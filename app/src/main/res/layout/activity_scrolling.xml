@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.dean.articlecomment.ScrollingActivity">
+    tools:context="com.dean.articlecomment.ArticleActivity">
 
     <com.dean.articlecomment.XAppBarLayout
         android:id="@+id/app_bar"

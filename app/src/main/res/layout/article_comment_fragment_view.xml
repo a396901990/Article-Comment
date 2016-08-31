@@ -4,8 +4,8 @@
     android:background="#ffffff"
     android:orientation="vertical">
 
-    <com.dean.articlecomment.ProgressWebView
-        android:id="@+id/web_view"
+    <com.dean.articlecomment.xrecycleview.XRecyclerView
+        android:id="@+id/comment_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

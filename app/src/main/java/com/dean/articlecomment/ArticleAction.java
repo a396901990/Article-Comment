@@ -19,4 +19,6 @@ public interface ArticleAction {
     void commentArticle();
     void onCommentSuccess();
     void onCommentFailed();
+
+    void onLoadMoreComment();
 }

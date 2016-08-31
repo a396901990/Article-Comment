@@ -5,15 +5,17 @@ import android.support.v4.widget.NestedScrollView;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.dean.articlecomment.xrecycleview.XRecyclerView;
-
 /**
  * Created by DeanGuo on 8/31/16.
  */
 
 public class XNestedScrollView extends NestedScrollView implements NestedScrollView.OnScrollChangeListener {
 
-    private XRecyclerView mXRecyclerView;
+    public interface XNestedScrollViewListener {
+        void onScrollToPageEnd();
+    }
+
+    private XNestedScrollViewListener xNestedScrollViewListener;
 
     public XNestedScrollView(Context context) {
         super(context);
@@ -30,13 +32,13 @@ public class XNestedScrollView extends NestedScrollView implements NestedScrollV
         int lastViewHeight = lastView.getBottom();
         lastViewHeight -= (v.getHeight() + v.getScrollY());
         if (lastViewHeight == 0) {
-            if (mXRecyclerView != null) {
-                mXRecyclerView.onLoadMore();
+            if (xNestedScrollViewListener != null) {
+                xNestedScrollViewListener.onScrollToPageEnd();
             }
         }
     }
 
-    public void setXRecyclerView(XRecyclerView mXRecyclerView) {
-        this.mXRecyclerView = mXRecyclerView;
+    public void setXNestedScrollViewListener(XNestedScrollViewListener xNestedScrollViewListener) {
+        this.xNestedScrollViewListener = xNestedScrollViewListener;
     }
 }

@@ -173,7 +173,7 @@ public class XRecyclerView extends RecyclerView {
                 lastVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
             }
             if (layoutManager.getChildCount() > 0
-                    && lastVisibleItemPosition >= layoutManager.getItemCount() - 1 && layoutManager.getItemCount() > layoutManager.getChildCount() && !isNoMore) {
+                    && lastVisibleItemPosition >= layoutManager.getItemCount() - 1 && layoutManager.getItemCount() >= layoutManager.getChildCount() && !isNoMore) {
 
                 if (pullRefreshEnabled && mRefreshHeader != null && mRefreshHeader.isRefreshing()) {
                     return;
@@ -187,6 +187,20 @@ public class XRecyclerView extends RecyclerView {
                 mLoadingListener.onLoadMore();
             }
         }
+    }
+
+    public void onLoadMore() {
+        if (mLoadingListener == null || isLoadingData || !loadingMoreEnabled) {
+            return;
+        }
+
+        isLoadingData = true;
+        if (mFootView instanceof LoadingMoreFooter) {
+            ((LoadingMoreFooter) mFootView).setState(LoadingMoreFooter.STATE_LOADING);
+        } else {
+            mFootView.setVisibility(View.VISIBLE);
+        }
+        mLoadingListener.onLoadMore();
     }
 
     private int findMax(int[] lastPositions) {

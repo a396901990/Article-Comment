@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     tools:context="com.dean.articlecomment.ScrollingActivity">
 
-    <android.support.design.widget.AppBarLayout
+    <com.dean.articlecomment.XAppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-    </android.support.design.widget.AppBarLayout>
+    </com.dean.articlecomment.XAppBarLayout>
 
     <include layout="@layout/content_scrolling" />
 

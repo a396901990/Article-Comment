@@ -1,28 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.dean.articlecomment.XNestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dean.articlecomment.ScrollingActivity"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_scrolling">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <com.dean.articlecomment.ProgressWebView
             android:id="@+id/web_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            ></com.dean.articlecomment.ProgressWebView>
+            android:layout_height="wrap_content"></com.dean.articlecomment.ProgressWebView>
 
         <com.dean.articlecomment.xrecycleview.XRecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
     </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+</com.dean.articlecomment.XNestedScrollView>

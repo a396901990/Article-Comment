@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <com.dean.articlecomment.xrecycleview.XRecyclerView
+        android:background="#99CCCCCC"
         android:id="@+id/comment_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

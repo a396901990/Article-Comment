@@ -50,7 +50,7 @@ public class ArticleCommentFragment extends Fragment {
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setNestedScrollingEnabled(false);
         mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.Pacman);
-
+        mRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(3));
         mRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {

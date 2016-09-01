@@ -14,8 +14,8 @@ public class ArticleActivity extends AppCompatActivity implements ArticleAction,
     Animation mHideAnimation,mShowAnimation;
     View bottomContent, commentBtn, goCommentBtn;
 
-    private MyAdapter mAdapter;
-    private ArrayList<String> listData;
+    private CommentAdapter mAdapter;
+    private ArrayList<Comment> listData;
     private int refreshTime = 0;
     private int times = 0;
     XNestedScrollView nestedScrollView;
@@ -47,11 +47,14 @@ public class ArticleActivity extends AppCompatActivity implements ArticleAction,
         
         initBottomContent();
 
-        listData = new ArrayList<String>();
+        listData = new ArrayList<Comment>();
         for(int i = 0; i < 15 ;i++){
-            listData.add("item" + i);
+            Comment newComment = new Comment();
+            newComment.userName = "游客" + i;
+            newComment.commentContent = "他很懒什么都没说。";
+            listData.add(newComment);
         }
-        mAdapter = new MyAdapter(listData);
+        mAdapter = new CommentAdapter(listData);
     }
 
     private void initBottomContent() {
@@ -130,8 +133,17 @@ public class ArticleActivity extends AppCompatActivity implements ArticleAction,
     }
 
     @Override
+    public void deleteComment() {
+
+    }
+
+    @Override
     public void commentArticle() {
-        listData.add(0, "new comment");
+        Comment newComment = new Comment();
+        newComment.userName = "大苞米";
+        newComment.commentContent = "最新评论";
+        newComment.isPublisher = true;
+        listData.add(0, newComment);
         mAdapter.notifyItemInserted(0);
     }
 
@@ -150,8 +162,11 @@ public class ArticleActivity extends AppCompatActivity implements ArticleAction,
         if(times < 2){
             new Handler().postDelayed(new Runnable(){
                 public void run() {
-                    for(int i = 0; i < 15 ;i++){
-                        listData.add("item" + (1 + listData.size() ) );
+                    for(int i = 0; i < 8 ;i++) {
+                        Comment newComment = new Comment();
+                        newComment.userName = "游客" + listData.size();
+                        newComment.commentContent = "他很懒什么都没说。";
+                        listData.add(newComment);
                     }
                     mCommentFragment.getRecyclerView().loadMoreComplete();
                     mAdapter.notifyDataSetChanged();
@@ -160,8 +175,11 @@ public class ArticleActivity extends AppCompatActivity implements ArticleAction,
         } else {
             new Handler().postDelayed(new Runnable() {
                 public void run() {
-                    for(int i = 0; i < 9 ;i++){
-                        listData.add("item" + (1 + listData.size() ) );
+                    for(int i = 0; i < 9 ;i++) {
+                        Comment newComment = new Comment();
+                        newComment.userName = "游客" + listData.size();
+                        newComment.commentContent = "他很懒什么都没说。";
+                        listData.add(newComment);
                     }
                     mCommentFragment.getRecyclerView().setNoMore(true);
                     mAdapter.notifyDataSetChanged();

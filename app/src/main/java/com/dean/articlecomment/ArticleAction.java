@@ -16,6 +16,8 @@ public interface ArticleAction {
     void likeAction();
     void shareAction();
 
+    void deleteComment();
+
     void commentArticle();
     void onCommentSuccess();
     void onCommentFailed();

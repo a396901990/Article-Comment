@@ -12,13 +12,13 @@ import java.util.ArrayList;
 
 public class ArticleActivity extends AppCompatActivity implements ArticleAction, XAppBarLayout.XAppBarListener, XNestedScrollView.XNestedScrollViewListener{
     Animation mHideAnimation,mShowAnimation;
-    View bottomContent;
+    View bottomContent, commentBtn, goCommentBtn;
 
     private MyAdapter mAdapter;
     private ArrayList<String> listData;
     private int refreshTime = 0;
     private int times = 0;
-
+    XNestedScrollView nestedScrollView;
     private ArticleWebViewFragment mWebViewFragment;
 
     private ArticleCommentFragment mCommentFragment;
@@ -42,8 +42,8 @@ public class ArticleActivity extends AppCompatActivity implements ArticleAction,
         XAppBarLayout appBarLayout = (XAppBarLayout) findViewById(R.id.app_bar);
         appBarLayout.setXAppBarListener(this);
 
-        XNestedScrollView scrollView = (XNestedScrollView) findViewById(R.id.scrollView);
-        scrollView.setXNestedScrollViewListener(this);
+        nestedScrollView = (XNestedScrollView) findViewById(R.id.scrollView);
+        nestedScrollView.setXNestedScrollViewListener(this);
         
         initBottomContent();
 
@@ -58,6 +58,22 @@ public class ArticleActivity extends AppCompatActivity implements ArticleAction,
         bottomContent = findViewById(R.id.bottom_content);
         mHideAnimation = AnimationUtils.loadAnimation(this, R.anim.hide_to_bottom);
         mShowAnimation = AnimationUtils.loadAnimation(this, R.anim.show_from_bottom);
+
+        commentBtn = findViewById(R.id.comment_btn);
+        commentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                commentArticle();
+            }
+        });
+
+        goCommentBtn = findViewById(R.id.go_comment_btn);
+        goCommentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gotoComment();
+            }
+        });
     }
 
     @Override
@@ -95,7 +111,7 @@ public class ArticleActivity extends AppCompatActivity implements ArticleAction,
 
     @Override
     public String getArticleUrl() {
-        return "http://7xs3hm.com1.z0.glb.clouddn.com/0425%E7%8E%A9%E8%BD%AC%E6%88%B7%E5%A4%96%E6%8E%A2%E5%AD%90%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF.html";
+        return "https://www.baidu.com";
     }
 
     @Override
@@ -115,7 +131,8 @@ public class ArticleActivity extends AppCompatActivity implements ArticleAction,
 
     @Override
     public void commentArticle() {
-
+        listData.add(0, "new comment");
+        mAdapter.notifyItemInserted(0);
     }
 
     @Override
@@ -152,6 +169,17 @@ public class ArticleActivity extends AppCompatActivity implements ArticleAction,
             }, 1000);
         }
         times ++;
+    }
+
+    @Override
+    public void gotoComment() {
+        final View commentView = findViewById(R.id.comment_content_view);
+        nestedScrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                nestedScrollView.smoothScrollTo(0, commentView.getTop());
+            }
+        });
     }
 
     public boolean isHidden() {

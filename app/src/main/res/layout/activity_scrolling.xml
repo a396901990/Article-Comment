@@ -26,37 +26,6 @@
 
     <include layout="@layout/content_scrolling" />
 
-    <LinearLayout
-        android:id="@+id/bottom_content"
-        android:background="@color/colorPrimary"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom">
-
-        <TextView
-            android:textColor="#ffffff"
-            android:gravity="center"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:text="评论"/>
-
-        <TextView
-            android:textColor="#ffffff"
-            android:gravity="center"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:text="收藏"/>
-
-
-        <TextView
-            android:textColor="#ffffff"
-            android:gravity="center"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:text="转发"/>
-    </LinearLayout>
+    <include layout="@layout/article_bottom_view" />
 
 </android.support.design.widget.CoordinatorLayout>

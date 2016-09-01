@@ -21,4 +21,6 @@ public interface ArticleAction {
     void onCommentFailed();
 
     void onLoadMoreComment();
+
+    void gotoComment();
 }

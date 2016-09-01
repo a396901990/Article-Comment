@@ -284,18 +284,13 @@ public class XRecyclerView extends RecyclerView {
             }
         }
 
-        public boolean isRefreshHeader(int position) {
-            return position == 0;
-        }
-
         public int getHeadersCount() {
             return mHeaderViews.size();
         }
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            if (viewType == TYPE_REFRESH_HEADER) {
-            } else if (isHeaderType(viewType)) {
+            if (isHeaderType(viewType)) {
                 return new SimpleViewHolder(getHeaderViewByType(viewType));
             } else if (viewType == TYPE_FOOTER) {
                 return new SimpleViewHolder(mFootView);
@@ -305,10 +300,10 @@ public class XRecyclerView extends RecyclerView {
 
         @Override
         public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-            if (isHeader(position) || isRefreshHeader(position)) {
+            if (isHeader(position)) {
                 return;
             }
-            int adjPosition = position - (getHeadersCount() + 1);
+            int adjPosition = position - getHeadersCount();
             int adapterCount;
             if (adapter != null) {
                 adapterCount = adapter.getItemCount();
@@ -323,30 +318,26 @@ public class XRecyclerView extends RecyclerView {
         public int getItemCount() {
             if(loadingMoreEnabled) {
                 if (adapter != null) {
-                    return getHeadersCount() + adapter.getItemCount() + 2;
-                } else {
-                    return getHeadersCount() + 2;
-                }
-            }else {
-                if (adapter != null) {
                     return getHeadersCount() + adapter.getItemCount() + 1;
                 } else {
                     return getHeadersCount() + 1;
+                }
+            }else {
+                if (adapter != null) {
+                    return getHeadersCount() + adapter.getItemCount();
+                } else {
+                    return getHeadersCount();
                 }
             }
         }
 
         @Override
         public int getItemViewType(int position) {
-            int adjPosition = position - (getHeadersCount() + 1);
+            int adjPosition = position - getHeadersCount();
             if(isReservedItemViewType(adapter.getItemViewType(adjPosition))) {
                 throw new IllegalStateException("XRecyclerView require itemViewType in adapter should be less than 10000 " );
             }
-            if (isRefreshHeader(position)) {
-                return TYPE_REFRESH_HEADER;
-            }
             if (isHeader(position)) {
-                position = position - 1;
                 return sHeaderTypes.get(position);
             }
             if (isFooter(position)) {
@@ -365,8 +356,8 @@ public class XRecyclerView extends RecyclerView {
 
         @Override
         public long getItemId(int position) {
-            if (adapter != null && position >= getHeadersCount() + 1) {
-                int adjPosition = position - (getHeadersCount() + 1);
+            if (adapter != null && position >= getHeadersCount()) {
+                int adjPosition = position - getHeadersCount();
                 if (adjPosition < adapter.getItemCount()) {
                     return adapter.getItemId(adjPosition);
                 }
@@ -383,7 +374,7 @@ public class XRecyclerView extends RecyclerView {
                 gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                     @Override
                     public int getSpanSize(int position) {
-                        return (isHeader(position) || isFooter(position) || isRefreshHeader(position))
+                        return (isHeader(position) || isFooter(position))
                                 ? gridManager.getSpanCount() : 1;
                     }
                 });
@@ -402,7 +393,7 @@ public class XRecyclerView extends RecyclerView {
             ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
             if (lp != null
                     && lp instanceof StaggeredGridLayoutManager.LayoutParams
-                    && (isHeader(holder.getLayoutPosition()) ||isRefreshHeader(holder.getLayoutPosition()) || isFooter(holder.getLayoutPosition()))) {
+                    && (isHeader(holder.getLayoutPosition()) || isFooter(holder.getLayoutPosition()))) {
                 StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) lp;
                 p.setFullSpan(true);
             }

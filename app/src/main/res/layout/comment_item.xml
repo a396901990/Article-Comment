@@ -11,14 +11,14 @@
         android:layout_width="38dip"
         android:layout_height="38dip"
         android:layout_gravity="top"
-        android:layout_margin="10dp"
-        android:background="#424242" />
+        android:background="#424242"
+        android:layout_margin="10dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dip"
         android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dip"
         android:layout_toRightOf="@+id/icon"
         android:orientation="vertical">
 
@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dip"
-            android:textColor="#424242"
+            android:textColor="@color/colorPrimary"
             android:textSize="18dp"
             tools:text="大苞米" />
 

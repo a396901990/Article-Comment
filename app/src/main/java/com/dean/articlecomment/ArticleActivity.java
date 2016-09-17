@@ -8,43 +8,61 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import com.dean.articlecomment.util.ActivityUtils;
+
 import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ArticleActivity extends AppCompatActivity implements ArticleAction, XAppBarLayout.XAppBarListener, XNestedScrollView.XNestedScrollViewListener{
     Animation mHideAnimation,mShowAnimation;
-    View bottomContent, commentBtn, goCommentBtn;
+
+    @BindView(R.id.bottom_content)
+    View bottomContent;
+
+    @BindView(R.id.scrollView)
+    XNestedScrollView nestedScrollView;
+
+    @BindView(R.id.app_bar)
+    XAppBarLayout appBarLayout;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     private CommentAdapter mAdapter;
     private ArrayList<Comment> listData;
-    private int refreshTime = 0;
     private int times = 0;
-    XNestedScrollView nestedScrollView;
+
     private ArticleWebViewFragment mWebViewFragment;
 
     private ArticleCommentFragment mCommentFragment;
 
+    ArticleActivity articleActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        articleActivity = this;
         setContentView(R.layout.activity_scrolling);
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(articleActivity);
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         // webView fragment
         mWebViewFragment = ArticleWebViewFragment.newInstance(this);
-        getFragmentManager().beginTransaction().add(R.id.article_content_view, mWebViewFragment).commit();
+        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mWebViewFragment, R.id.article_content_view);
 
         // comment fragment
         mCommentFragment = ArticleCommentFragment.newInstance(this);
-        getFragmentManager().beginTransaction().add(R.id.comment_content_view, mCommentFragment).commit();
+        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mCommentFragment, R.id.comment_content_view);
 
-        XAppBarLayout appBarLayout = (XAppBarLayout) findViewById(R.id.app_bar);
         appBarLayout.setXAppBarListener(this);
 
-        nestedScrollView = (XNestedScrollView) findViewById(R.id.scrollView);
         nestedScrollView.setXNestedScrollViewListener(this);
-        
+
         initBottomContent();
 
         listData = new ArrayList<Comment>();
@@ -58,25 +76,8 @@ public class ArticleActivity extends AppCompatActivity implements ArticleAction,
     }
 
     private void initBottomContent() {
-        bottomContent = findViewById(R.id.bottom_content);
         mHideAnimation = AnimationUtils.loadAnimation(this, R.anim.hide_to_bottom);
         mShowAnimation = AnimationUtils.loadAnimation(this, R.anim.show_from_bottom);
-
-        commentBtn = findViewById(R.id.comment_btn);
-        commentBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                commentArticle();
-            }
-        });
-
-        goCommentBtn = findViewById(R.id.go_comment_btn);
-        goCommentBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                gotoComment();
-            }
-        });
     }
 
     @Override
@@ -137,6 +138,7 @@ public class ArticleActivity extends AppCompatActivity implements ArticleAction,
 
     }
 
+    @OnClick(R.id.comment_btn)
     @Override
     public void commentArticle() {
         Comment newComment = new Comment();
@@ -189,6 +191,7 @@ public class ArticleActivity extends AppCompatActivity implements ArticleAction,
         times ++;
     }
 
+    @OnClick(R.id.go_comment_btn)
     @Override
     public void gotoComment() {
         final View commentView = findViewById(R.id.comment_content_view);

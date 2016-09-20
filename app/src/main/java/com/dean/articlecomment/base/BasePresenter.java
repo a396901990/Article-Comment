@@ -1,4 +1,4 @@
-/*
+package com.dean.articlecomment.base;/*
  * Copyright 2016, The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,8 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package com.example.android.architecture.blueprints.todoapp;
 
 public interface BasePresenter {
 

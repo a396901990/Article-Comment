@@ -6,9 +6,9 @@ package com.dean.articlecomment;
 
 public class Comment {
 
-    boolean isPublisher = false;
+    public boolean isPublisher = false;
 
-    String userName;
-    String userIcon;
-    String commentContent;
+    public String userName;
+    public String userIcon;
+    public String commentContent;
 }

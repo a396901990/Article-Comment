@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
  * Created by codeest on 2016/8/2.
  * MVP Fragment基类
  */
-public abstract class BaseFragment<T extends BasePresenter> extends Fragment implements BaseView{
+public abstract class BaseFragment<T extends BasePresenter> extends Fragment implements BaseView<T>{
 
     protected T mPresenter;
     protected View mView;
@@ -39,7 +39,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPresenter.attachView(this);
         ButterKnife.bind(this, view);
         init();
     }
@@ -57,10 +56,13 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (mPresenter != null)
-            mPresenter.detachView();
     }
 
     protected abstract int getLayoutId();
     protected abstract void init();
+
+    @Override
+    public void setPresenter(T presenter) {
+        mPresenter = presenter;
+    }
 }

@@ -12,9 +12,8 @@ import butterknife.ButterKnife;
  * Created by codeest on 2016/8/2.
  * MVP activity基类
  */
-public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements BaseView{
+public abstract class BaseActivity extends AppCompatActivity {
 
-    protected T mPresenter;
     protected Activity mContext;
 
     @Override
@@ -23,8 +22,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         setContentView(getLayoutId());
         ButterKnife.bind(this);
         mContext = this;
-        if (mPresenter != null)
-            mPresenter.attachView(this);
         App.getInstance().addActivity(this);
         init();
     }
@@ -49,8 +46,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null)
-            mPresenter.detachView();
         App.getInstance().removeActivity(this);
     }
 

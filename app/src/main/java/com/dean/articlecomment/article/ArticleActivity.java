@@ -90,7 +90,7 @@ public class ArticleActivity extends BaseActivity<ArticleContract.Presenter> imp
 
     @Override
     public void onScrollToPageEnd() {
-        mPresenter.onLoadingMoreComment();
+        mCommentFragment.onScrollToPageEnd();
     }
 
     @Override

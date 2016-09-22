@@ -23,6 +23,7 @@ public interface ArticleContract {
     interface CommentView extends BaseView<Presenter> {
         void showComments(ArrayList<Comment> comments);
         void showLoadMoreComments(ArrayList<Comment> comments);
+        void onScrollToPageEnd();
     }
 
     interface ArticleView extends BaseView<Presenter> {

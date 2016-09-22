@@ -55,6 +55,7 @@ public class ArticleCommentFragment extends BaseFragment<ArticleContract.Present
 
             @Override
             public void onLoadMore() {
+                mPresenter.onLoadingMoreComment();
             }
         });
 
@@ -74,5 +75,11 @@ public class ArticleCommentFragment extends BaseFragment<ArticleContract.Present
     @Override
     public void showLoadMoreComments(ArrayList<Comment> comments) {
         mAdapter.addData(comments);
+        mRecyclerView.setNoMore(false);
+    }
+
+    @Override
+    public void onScrollToPageEnd() {
+        mRecyclerView.onLoadMore();
     }
 }

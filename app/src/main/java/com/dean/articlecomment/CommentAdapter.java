@@ -13,9 +13,7 @@ import java.util.ArrayList;
  */
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
     public ArrayList<Comment> datas = null;
-    public CommentAdapter(ArrayList<Comment> datas) {
-        this.datas = datas;
-    }
+
     //创建新View，被LayoutManager所调用
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -40,7 +38,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     //获取数据的数量
     @Override
     public int getItemCount() {
-        return datas.size();
+        return datas == null ? 0 : datas.size();
     }
     //自定义的ViewHolder，持有每个Item的的所有界面元素
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -54,5 +52,18 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             commentContent = (TextView) view.findViewById(R.id.comment_content);
             deleteComment = (TextView) view.findViewById(R.id.del_comment);
         }
+    }
+
+    public void setData(ArrayList<Comment> datas) {
+        this.datas = datas;
+        notifyDataSetChanged();
+    }
+
+
+    public void addData(ArrayList<Comment> datas) {
+        for (Comment comment : datas) {
+            this.datas.add(comment);
+        }
+        notifyDataSetChanged();
     }
 }

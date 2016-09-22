@@ -72,7 +72,7 @@ public class ArticleActivity extends AppCompatActivity implements ArticleAction,
             newComment.commentContent = "他很懒什么都没说。";
             listData.add(newComment);
         }
-        mAdapter = new CommentAdapter(listData);
+        mAdapter = new CommentAdapter();
     }
 
     private void initBottomContent() {

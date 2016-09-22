@@ -53,16 +53,12 @@ public class ArticleDetailFragment extends BaseFragment<ArticleContract.Presente
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
                 if (newProgress == 100) {
+                    mPresenter.onLoadingArticleSuccess();
                 } else {
                 }
             }
         });
-        mPresenter.getArticleUrl();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+        mPresenter.onLoadingArticle();
     }
 
     @Override

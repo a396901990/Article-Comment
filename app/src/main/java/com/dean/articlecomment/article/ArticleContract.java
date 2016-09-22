@@ -13,18 +13,23 @@ import java.util.ArrayList;
 public interface ArticleContract {
 
     interface Presenter extends BasePresenter {
-        void getArticleUrl();
+        void onLoadingArticle();
+        void onLoadingComment();
+        void onLoadingMoreComment();
+        void onLoadingArticleSuccess();
+        void onLoadingArticleFailed();
     }
 
     interface CommentView extends BaseView<Presenter> {
         void showComments(ArrayList<Comment> comments);
+        void showLoadMoreComments(ArrayList<Comment> comments);
     }
 
     interface ArticleView extends BaseView<Presenter> {
         void showArticle(String url);
     }
 
-    interface BottomView extends BaseView<Presenter> {
+    interface View extends BaseView<Presenter> {
         void showBottomView();
         void hideBottomView();
     }

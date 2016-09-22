@@ -1,15 +1,9 @@
 package com.dean.articlecomment.article;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import com.dean.articlecomment.ArticleAction;
 import com.dean.articlecomment.Comment;
+import com.dean.articlecomment.CommentAdapter;
 import com.dean.articlecomment.R;
 import com.dean.articlecomment.VerticalSpaceItemDecoration;
 import com.dean.articlecomment.base.BaseFragment;
@@ -24,13 +18,18 @@ import butterknife.BindView;
 /**
  * Created by DeanGuo on 8/18/16.
  */
-public class ArticleCommentFragment2 extends BaseFragment<ArticleContract.Presenter> implements ArticleContract.CommentView {
+public class ArticleCommentFragment extends BaseFragment<ArticleContract.Presenter> implements ArticleContract.CommentView {
 
     @BindView(R.id.comment_view)
     XRecyclerView mRecyclerView;
 
-    public static ArticleCommentFragment2 newInstance() {
-        return new ArticleCommentFragment2();
+    private CommentAdapter mAdapter;
+    private ArrayList<Comment> listData = new ArrayList<>();
+
+    private int times = 0;
+
+    public static ArticleCommentFragment newInstance() {
+        return new ArticleCommentFragment();
     }
 
     @Override
@@ -58,6 +57,9 @@ public class ArticleCommentFragment2 extends BaseFragment<ArticleContract.Presen
             public void onLoadMore() {
             }
         });
+
+        mAdapter = new CommentAdapter();
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     public XRecyclerView getRecyclerView() {
@@ -66,6 +68,11 @@ public class ArticleCommentFragment2 extends BaseFragment<ArticleContract.Presen
 
     @Override
     public void showComments(ArrayList<Comment> comments) {
+        mAdapter.setData(comments);
+    }
 
+    @Override
+    public void showLoadMoreComments(ArrayList<Comment> comments) {
+        mAdapter.addData(comments);
     }
 }

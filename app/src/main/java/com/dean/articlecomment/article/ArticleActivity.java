@@ -5,19 +5,15 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-import com.dean.articlecomment.Comment;
-import com.dean.articlecomment.CommentAdapter;
 import com.dean.articlecomment.R;
 import com.dean.articlecomment.XAppBarLayout;
 import com.dean.articlecomment.XNestedScrollView;
 import com.dean.articlecomment.base.BaseActivity;
 import com.dean.articlecomment.util.ActivityUtils;
 
-import java.util.ArrayList;
-
 import butterknife.BindView;
 
-public class ArticleActivity extends BaseActivity implements XAppBarLayout.XAppBarListener, XNestedScrollView.XNestedScrollViewListener{
+public class ArticleActivity extends BaseActivity<ArticleContract.Presenter> implements ArticleContract.View, XAppBarLayout.XAppBarListener, XNestedScrollView.XNestedScrollViewListener{
     Animation mHideAnimation,mShowAnimation;
 
     @BindView(R.id.bottom_content)
@@ -32,15 +28,9 @@ public class ArticleActivity extends BaseActivity implements XAppBarLayout.XAppB
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    private CommentAdapter mAdapter;
-    private ArrayList<Comment> listData;
-    private int times = 0;
-
-    private ArticlePresenter mPresenter;
-
     private ArticleDetailFragment mArticleFragment;
 
-    private ArticleCommentFragment2 mCommentFragment;
+    private ArticleCommentFragment mCommentFragment;
 
     @Override
     protected int getLayoutId() {
@@ -54,7 +44,7 @@ public class ArticleActivity extends BaseActivity implements XAppBarLayout.XAppB
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mArticleFragment, R.id.article_content_view);
 
         // comment fragment
-        mCommentFragment = ArticleCommentFragment2.newInstance();
+        mCommentFragment = ArticleCommentFragment.newInstance();
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mCommentFragment, R.id.comment_content_view);
 
         appBarLayout.setXAppBarListener(this);
@@ -63,16 +53,7 @@ public class ArticleActivity extends BaseActivity implements XAppBarLayout.XAppB
 
         initBottomContent();
 
-        listData = new ArrayList<Comment>();
-        for(int i = 0; i < 15 ;i++){
-            Comment newComment = new Comment();
-            newComment.userName = "游客" + i;
-            newComment.commentContent = "他很懒什么都没说。";
-            listData.add(newComment);
-        }
-        mAdapter = new CommentAdapter(listData);
-
-        mPresenter = new ArticlePresenter(mArticleFragment, mCommentFragment, null);
+        new ArticlePresenter(mArticleFragment, mCommentFragment, this);
     }
 
     private void initBottomContent() {
@@ -82,18 +63,12 @@ public class ArticleActivity extends BaseActivity implements XAppBarLayout.XAppB
 
     @Override
     public void onFingerUp() {
-        if (!isHidden()) {
-            playHideAnimation();
-            bottomContent.setVisibility(View.INVISIBLE);
-        }
+        showBottomView();
     }
 
     @Override
     public void onFingerDown() {
-        if (isHidden()) {
-            playShowAnimation();
-            bottomContent.setVisibility(View.VISIBLE);
-        }
+        hideBottomView();
     }
 
     public boolean isHidden() {
@@ -115,8 +90,22 @@ public class ArticleActivity extends BaseActivity implements XAppBarLayout.XAppB
 
     @Override
     public void onScrollToPageEnd() {
-        if (mCommentFragment.getRecyclerView() != null) {
-            mCommentFragment.getRecyclerView().onLoadMore();
+        mPresenter.onLoadingMoreComment();
+    }
+
+    @Override
+    public void showBottomView() {
+        if (!isHidden()) {
+            playHideAnimation();
+            bottomContent.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    @Override
+    public void hideBottomView() {
+        if (isHidden()) {
+            playShowAnimation();
+            bottomContent.setVisibility(View.VISIBLE);
         }
     }
 }

@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.dean.articlecomment.ArticleActivity">
+    tools:context="com.dean.articlecomment.article.ArticleActivity">
 
-    <com.dean.articlecomment.XAppBarLayout
+    <com.dean.articlecomment.ui.XAppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-    </com.dean.articlecomment.XAppBarLayout>
+    </com.dean.articlecomment.ui.XAppBarLayout>
 
     <include layout="@layout/content_scrolling" />
 

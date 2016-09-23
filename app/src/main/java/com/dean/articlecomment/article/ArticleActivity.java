@@ -6,8 +6,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.dean.articlecomment.R;
-import com.dean.articlecomment.XAppBarLayout;
-import com.dean.articlecomment.XNestedScrollView;
+import com.dean.articlecomment.ui.XAppBarLayout;
+import com.dean.articlecomment.ui.XNestedScrollView;
 import com.dean.articlecomment.base.BaseActivity;
 import com.dean.articlecomment.util.ActivityUtils;
 

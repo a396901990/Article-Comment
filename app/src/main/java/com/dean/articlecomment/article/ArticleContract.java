@@ -1,6 +1,5 @@
 package com.dean.articlecomment.article;
 
-import com.dean.articlecomment.Comment;
 import com.dean.articlecomment.base.BasePresenter;
 import com.dean.articlecomment.base.BaseView;
 
@@ -21,8 +20,8 @@ public interface ArticleContract {
     }
 
     interface CommentView extends BaseView<Presenter> {
-        void showComments(ArrayList<Comment> comments);
-        void showLoadMoreComments(ArrayList<Comment> comments);
+        void showComments(ArrayList<ArticleComment> comments);
+        void showLoadMoreComments(ArrayList<ArticleComment> comments);
         void onScrollToPageEnd();
     }
 

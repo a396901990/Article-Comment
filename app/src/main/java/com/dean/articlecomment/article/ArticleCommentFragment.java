@@ -2,13 +2,11 @@ package com.dean.articlecomment.article;
 
 import android.support.v7.widget.LinearLayoutManager;
 
-import com.dean.articlecomment.Comment;
-import com.dean.articlecomment.CommentAdapter;
 import com.dean.articlecomment.R;
-import com.dean.articlecomment.VerticalSpaceItemDecoration;
+import com.dean.articlecomment.ui.VerticalSpaceItemDecoration;
 import com.dean.articlecomment.base.BaseFragment;
-import com.dean.articlecomment.xrecycleview.ProgressStyle;
-import com.dean.articlecomment.xrecycleview.XRecyclerView;
+import com.dean.articlecomment.ui.xrecycleview.ProgressStyle;
+import com.dean.articlecomment.ui.xrecycleview.XRecyclerView;
 
 import java.util.ArrayList;
 
@@ -23,8 +21,8 @@ public class ArticleCommentFragment extends BaseFragment<ArticleContract.Present
     @BindView(R.id.comment_view)
     XRecyclerView mRecyclerView;
 
-    private CommentAdapter mAdapter;
-    private ArrayList<Comment> listData = new ArrayList<>();
+    private ArticleCommentAdapter mAdapter;
+    private ArrayList<ArticleComment> listData = new ArrayList<>();
 
     private int times = 0;
 
@@ -59,7 +57,7 @@ public class ArticleCommentFragment extends BaseFragment<ArticleContract.Present
             }
         });
 
-        mAdapter = new CommentAdapter();
+        mAdapter = new ArticleCommentAdapter();
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -68,12 +66,12 @@ public class ArticleCommentFragment extends BaseFragment<ArticleContract.Present
     }
 
     @Override
-    public void showComments(ArrayList<Comment> comments) {
+    public void showComments(ArrayList<ArticleComment> comments) {
         mAdapter.setData(comments);
     }
 
     @Override
-    public void showLoadMoreComments(ArrayList<Comment> comments) {
+    public void showLoadMoreComments(ArrayList<ArticleComment> comments) {
         mAdapter.addData(comments);
         mRecyclerView.setNoMore(false);
     }

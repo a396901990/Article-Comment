@@ -2,8 +2,6 @@ package com.dean.articlecomment.article;
 
 import android.os.Handler;
 
-import com.dean.articlecomment.Comment;
-
 import java.util.ArrayList;
 
 /**
@@ -36,9 +34,9 @@ public class ArticlePresenter implements ArticleContract.Presenter {
 
     @Override
     public void onLoadingComment() {
-        ArrayList<Comment> comments = new ArrayList<Comment>();
+        ArrayList<ArticleComment> comments = new ArrayList<ArticleComment>();
         for(int i = 0; i < 15 ;i++){
-            Comment newComment = new Comment();
+            ArticleComment newComment = new ArticleComment();
             newComment.userName = "游客" + i;
             newComment.commentContent = "他很懒什么都没说。";
             comments.add(newComment);
@@ -49,9 +47,9 @@ public class ArticlePresenter implements ArticleContract.Presenter {
 
     @Override
     public void onLoadingMoreComment() {
-        ArrayList<Comment> comments = new ArrayList<Comment>();
+        ArrayList<ArticleComment> comments = new ArrayList<ArticleComment>();
         for(int i = 0; i < 8 ;i++) {
-            Comment newComment = new Comment();
+            ArticleComment newComment = new ArticleComment();
             newComment.userName = "游客";
             newComment.commentContent = "他很懒什么都没说。";
             comments.add(newComment);

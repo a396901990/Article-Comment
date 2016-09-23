@@ -1,11 +1,16 @@
 package com.dean.articlecomment.article;
 
+import android.graphics.Bitmap;
+import android.support.v4.widget.ContentLoadingProgressBar;
+import android.view.View;
+
 import com.dean.articlecomment.R;
 import com.dean.articlecomment.base.BaseFragment;
 import com.dean.articlecomment.util.SystemUtil;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 
 import butterknife.BindView;
 
@@ -28,37 +33,33 @@ public class ArticleDetailFragment extends BaseFragment<ArticleContract.Presente
 
     @Override
     protected void init() {
-        WebSettings settings = webView.getSettings();
-        settings.setAppCacheEnabled(true);
-        settings.setDomStorageEnabled(true);
-        settings.setDatabaseEnabled(true);
-        if (SystemUtil.isNetworkConnected()) {
-            settings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        } else {
-            settings.setCacheMode(WebSettings.LOAD_CACHE_ONLY);
-        }
-        settings.setJavaScriptEnabled(true);
-        settings.setLoadWithOverviewMode(true);
-        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        settings.setSupportZoom(true);
-        webView.setWebViewClient(new com.tencent.smtt.sdk.WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
-            }
-        });
-        webView.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public void onProgressChanged(WebView view, int newProgress) {
-                super.onProgressChanged(view, newProgress);
-                if (newProgress == 100) {
-                    mPresenter.onLoadingArticleSuccess();
-                } else {
-                }
-            }
-        });
+
+        webView.setWebViewClient(new webViewClient());
         mPresenter.onLoadingArticle();
+    }
+
+    public class webViewClient extends WebViewClient  {
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView webView, String s) {
+            return super.shouldOverrideUrlLoading(webView, s);
+        }
+
+        @Override
+        public void onPageStarted(WebView webView, String s, Bitmap bitmap) {
+            super.onPageStarted(webView, s, bitmap);
+        }
+
+        @Override
+        public void onPageFinished(WebView webView, String s) {
+            super.onPageFinished(webView, s);
+            mPresenter.onLoadingArticleSuccess();
+        }
+
+        @Override
+        public void onReceivedError(WebView webView, int i, String s, String s1) {
+            super.onReceivedError(webView, i, s, s1);
+        }
     }
 
     @Override

@@ -24,6 +24,15 @@ android {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
+    //支持lint warning 检查机制
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
+    //为什么加入这个呢？防止冲突，比如我同时用了dagger-compiler就会报错，说下面这个`Processor`重复了
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
 }
 
 dependencies {
@@ -32,6 +41,9 @@ dependencies {
     compile 'com.android.support:design:24.2.0'
     compile 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'com.google.dagger:dagger:2.0'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.0'
+    provided 'org.glassfish:javax.annotation:10.0-b28'
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'com.orhanobut:logger:1.15'

@@ -11,9 +11,11 @@ import com.dean.articlecomment.ui.XNestedScrollView;
 import com.dean.articlecomment.base.BaseActivity;
 import com.dean.articlecomment.util.ActivityUtils;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 
-public class ArticleActivity extends BaseActivity<ArticleContract.Presenter> implements ArticleContract.View, XAppBarLayout.XAppBarListener, XNestedScrollView.XNestedScrollViewListener{
+public class ArticleActivity extends BaseActivity implements ArticleContract.View, XAppBarLayout.XAppBarListener, XNestedScrollView.XNestedScrollViewListener{
     Animation mHideAnimation,mShowAnimation;
 
     @BindView(R.id.bottom_content)
@@ -27,6 +29,9 @@ public class ArticleActivity extends BaseActivity<ArticleContract.Presenter> imp
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    @Inject
+    ArticlePresenter articlePresenter;
 
     private ArticleDetailFragment mArticleFragment;
 
@@ -52,8 +57,7 @@ public class ArticleActivity extends BaseActivity<ArticleContract.Presenter> imp
         nestedScrollView.setXNestedScrollViewListener(this);
 
         initBottomContent();
-
-        new ArticlePresenter(mArticleFragment, mCommentFragment, this);
+        DaggerArticleComponent.builder().articlePresenterModule(new ArticlePresenterModule(mArticleFragment, mCommentFragment, this)).build().inject(this);
     }
 
     private void initBottomContent() {
@@ -107,5 +111,10 @@ public class ArticleActivity extends BaseActivity<ArticleContract.Presenter> imp
             playShowAnimation();
             bottomContent.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void setPresenter(ArticleContract.Presenter presenter) {
+        articlePresenter = (ArticlePresenter) presenter;
     }
 }

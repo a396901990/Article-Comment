@@ -4,6 +4,8 @@ import android.os.Handler;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 /**
  * Created by DeanGuo on 9/20/16.
  */
@@ -16,11 +18,15 @@ public class ArticlePresenter implements ArticleContract.Presenter {
 
     protected final ArticleContract.View bottomView;
 
+    @Inject
     public ArticlePresenter(ArticleContract.ArticleView articleView, ArticleContract.CommentView commentView, ArticleContract.View bottomView) {
         this.articleView = articleView;
         this.commentView = commentView;
         this.bottomView = bottomView;
+    }
 
+    @Inject
+    void setupListeners() {
         // view中注入presenter
         articleView.setPresenter(this);
         commentView.setPresenter(this);

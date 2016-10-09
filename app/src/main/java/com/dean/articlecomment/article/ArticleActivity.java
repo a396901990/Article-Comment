@@ -15,7 +15,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class ArticleActivity extends BaseActivity implements ArticleContract.View, XAppBarLayout.XAppBarListener, XNestedScrollView.XNestedScrollViewListener{
+public class ArticleActivity extends BaseActivity<ArticlePresenter> implements ArticleContract.View, XAppBarLayout.XAppBarListener, XNestedScrollView.XNestedScrollViewListener{
     Animation mHideAnimation,mShowAnimation;
 
     @BindView(R.id.bottom_content)
@@ -30,26 +30,19 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @Inject
-    ArticlePresenter articlePresenter;
-
-    private ArticleDetailFragment mArticleFragment;
-
-    private ArticleCommentFragment mCommentFragment;
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_scrolling;
     }
 
     @Override
-    protected void init() {
+    protected void initEventAndData() {
         // webView fragment
-        mArticleFragment = ArticleDetailFragment.newInstance();
+        ArticleDetailFragment mArticleFragment = ArticleDetailFragment.newInstance();
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mArticleFragment, R.id.article_content_view);
 
         // comment fragment
-        mCommentFragment = ArticleCommentFragment.newInstance();
+        ArticleCommentFragment mCommentFragment = ArticleCommentFragment.newInstance();
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mCommentFragment, R.id.comment_content_view);
 
         appBarLayout.setXAppBarListener(this);
@@ -67,12 +60,12 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
 
     @Override
     public void onFingerUp() {
-        showBottomView();
+        mPresenter.bottomView.showBottomView();
     }
 
     @Override
     public void onFingerDown() {
-        hideBottomView();
+        mPresenter.bottomView.hideBottomView();
     }
 
     public boolean isHidden() {
@@ -94,7 +87,7 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
 
     @Override
     public void onScrollToPageEnd() {
-        mCommentFragment.onScrollToPageEnd();
+        mPresenter.commentView.onScrollToPageEnd();
     }
 
     @Override
@@ -115,6 +108,11 @@ public class ArticleActivity extends BaseActivity implements ArticleContract.Vie
 
     @Override
     public void setPresenter(ArticleContract.Presenter presenter) {
-        articlePresenter = (ArticlePresenter) presenter;
+        mPresenter = (ArticlePresenter) presenter;
+    }
+
+    @Override
+    public boolean isActive() {
+        return true;
     }
 }

@@ -6,15 +6,20 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import javax.inject.Inject;
+
 import butterknife.ButterKnife;
 
 /**
- * Created by codeest on 2016/8/2.
+ * Created by DeanGuo on 2016/9/22.
  * MVP activity基类
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity {
 
     protected Activity mContext;
+
+    @Inject
+    protected T mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,12 +28,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mContext = this;
         App.getInstance().addActivity(this);
-        init();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
+        initEventAndData();
     }
 
     protected void setToolBar(Toolbar toolbar, String title) {
@@ -39,16 +39,18 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    public void onResume() {
+        super.onResume();
+        mPresenter.onStart();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mPresenter.onDestroy();
         App.getInstance().removeActivity(this);
     }
 
     protected abstract int getLayoutId();
-    protected abstract void init();
+    protected abstract void initEventAndData();
 }

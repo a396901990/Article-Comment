@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 
 /**
- * Created by codeest on 2016/8/2.
+ * Created by DeanGuo on 2016/9/22.
  * MVP Fragment基类
  */
 public abstract class BaseFragment<T extends BasePresenter> extends Fragment implements BaseView<T>{
@@ -40,29 +40,19 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        init();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+        initEventAndData();
     }
 
     protected abstract int getLayoutId();
-    protected abstract void init();
+    protected abstract void initEventAndData();
 
     @Override
     public void setPresenter(T presenter) {
         mPresenter = presenter;
+    }
+
+    @Override
+    public boolean isActive() {
+        return isAdded();
     }
 }

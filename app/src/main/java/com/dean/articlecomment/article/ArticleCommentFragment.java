@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import com.dean.articlecomment.R;
 import com.dean.articlecomment.ui.VerticalSpaceItemDecoration;
 import com.dean.articlecomment.base.BaseFragment;
+import com.dean.articlecomment.ui.XNestedScrollView;
 import com.dean.articlecomment.ui.xrecycleview.ProgressStyle;
 import com.dean.articlecomment.ui.xrecycleview.XRecyclerView;
 
@@ -22,9 +23,6 @@ public class ArticleCommentFragment extends BaseFragment<ArticleContract.Present
     XRecyclerView mRecyclerView;
 
     private ArticleCommentAdapter mAdapter;
-    private ArrayList<ArticleComment> listData = new ArrayList<>();
-
-    private int times = 0;
 
     public static ArticleCommentFragment newInstance() {
         return new ArticleCommentFragment();
@@ -36,7 +34,7 @@ public class ArticleCommentFragment extends BaseFragment<ArticleContract.Present
     }
 
     @Override
-    protected void init() {
+    protected void initEventAndData() {
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setAutoMeasureEnabled(true);

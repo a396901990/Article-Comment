@@ -32,7 +32,7 @@ public class ArticleDetailFragment extends BaseFragment<ArticleContract.Presente
     }
 
     @Override
-    protected void init() {
+    protected void initEventAndData() {
 
         webView.setWebViewClient(new webViewClient());
         mPresenter.onLoadingArticle();

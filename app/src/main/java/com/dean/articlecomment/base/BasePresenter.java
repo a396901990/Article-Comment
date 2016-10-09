@@ -18,6 +18,7 @@ package com.dean.articlecomment.base;
 
 public interface BasePresenter {
 
-    void start();
+    void onStart();
+    void onDestroy();
 
 }

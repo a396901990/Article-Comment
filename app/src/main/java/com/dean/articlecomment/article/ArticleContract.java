@@ -12,6 +12,9 @@ import java.util.ArrayList;
 public interface ArticleContract {
 
     interface Presenter extends BasePresenter {
+        void addComment();
+        void showBottomView();
+        void hideBottomView();
         void onLoadingArticle();
         void onLoadingComment();
         void onLoadingMoreComment();
@@ -22,6 +25,7 @@ public interface ArticleContract {
     interface CommentView extends BaseView<Presenter> {
         void showComments(ArrayList<ArticleComment> comments);
         void showLoadMoreComments(ArrayList<ArticleComment> comments);
+        void addComment(ArticleComment comment);
         void onScrollToPageEnd();
     }
 
@@ -32,5 +36,7 @@ public interface ArticleContract {
     interface View extends BaseView<Presenter> {
         void showBottomView();
         void hideBottomView();
+        void goToComment();
+        void goToArticle();
     }
 }

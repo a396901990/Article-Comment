@@ -42,6 +42,47 @@ public class ArticlePresenter extends RxPresenter implements ArticleContract.Pre
     }
 
     @Override
+    public void addComment() {
+        Subscription rxSubscription = Observable
+                .just("说点什么好呢~")
+                .map(s -> {
+                    ArticleComment articleComment = new ArticleComment();
+                    articleComment.userName = "大苞米";
+                    articleComment.commentContent = s;
+                    articleComment.isPublisher = true;
+                    return articleComment;
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ArticleComment>() {
+                    @Override
+                    public void onCompleted() {
+                        bottomView.goToComment();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onNext(ArticleComment articleComment) {
+                        commentView.addComment(articleComment);
+                    }
+                });
+
+        addSubscribe(rxSubscription);
+    }
+
+    @Override
+    public void showBottomView() {
+        bottomView.showBottomView();
+    }
+
+    @Override
+    public void hideBottomView() {
+        bottomView.hideBottomView();
+    }
+
+    @Override
     public void onLoadingArticle() {
         if (articleView.isActive())
             articleView.showArticle("https://www.baidu.com");
@@ -104,7 +145,7 @@ public class ArticlePresenter extends RxPresenter implements ArticleContract.Pre
                         subscriber.onNext(comments);
                     }
                 })
-                .delay(3, TimeUnit.SECONDS)
+                .delay(2, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ArrayList<ArticleComment>>() {

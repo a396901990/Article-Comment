@@ -75,6 +75,11 @@ public class ArticleCommentFragment extends BaseFragment<ArticleContract.Present
     }
 
     @Override
+    public void addComment(ArticleComment comment) {
+        mAdapter.addComment(comment);
+    }
+
+    @Override
     public void onScrollToPageEnd() {
         mRecyclerView.onLoadMore();
     }

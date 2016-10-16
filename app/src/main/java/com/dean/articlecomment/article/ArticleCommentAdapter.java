@@ -11,7 +11,7 @@ import com.dean.articlecomment.R;
 import java.util.ArrayList;
 
 /**
- * Created by jianghejie on 15/11/26.
+ * Created by DeanGuo on 9/1/16.
  */
 public class ArticleCommentAdapter extends RecyclerView.Adapter<ArticleCommentAdapter.ViewHolder> {
     public ArrayList<ArticleComment> datas = null;
@@ -28,13 +28,10 @@ public class ArticleCommentAdapter extends RecyclerView.Adapter<ArticleCommentAd
         viewHolder.userName.setText(datas.get(position).userName);
         viewHolder.commentContent.setText(datas.get(position).commentContent);
         viewHolder.deleteComment.setVisibility(datas.get(position).isPublisher ? View.VISIBLE : View.GONE);
-        viewHolder.deleteComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                datas.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, datas.size());
-            }
+        viewHolder.deleteComment.setOnClickListener(view -> {
+            datas.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, datas.size());
         });
     }
     //获取数据的数量
@@ -67,5 +64,11 @@ public class ArticleCommentAdapter extends RecyclerView.Adapter<ArticleCommentAd
             this.datas.add(comment);
         }
         notifyDataSetChanged();
+    }
+
+    public void addComment(ArticleComment comment) {
+        datas.add(0,comment);
+        this.notifyItemInserted(0);
+        this.notifyItemRangeChanged(0, datas.size());
     }
 }

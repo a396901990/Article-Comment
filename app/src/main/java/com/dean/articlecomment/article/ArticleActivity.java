@@ -15,8 +15,11 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class ArticleActivity extends BaseActivity<ArticlePresenter> implements ArticleContract.View, XAppBarLayout.XAppBarListener, XNestedScrollView.XNestedScrollViewListener{
-    Animation mHideAnimation,mShowAnimation;
+/**
+ * Created by DeanGuo on 9/1/16.
+ */
+public class ArticleActivity extends BaseActivity<ArticlePresenter> implements ArticleContract.View, XAppBarLayout.XAppBarListener, XNestedScrollView.XNestedScrollViewListener {
+    Animation mHideAnimation, mShowAnimation;
 
     @BindView(R.id.bottom_content)
     View bottomContent;
@@ -29,6 +32,18 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter> implements A
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    @BindView(R.id.comment_btn)
+    View commentBtn;
+
+    @BindView(R.id.go_comment_btn)
+    View goCommentBtn;
+
+    @BindView(R.id.comment_content_view)
+    View commentView;
+
+    @BindView(R.id.article_content_view)
+    View articleView;
 
     @Override
     protected int getLayoutId() {
@@ -56,16 +71,22 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter> implements A
     private void initBottomContent() {
         mHideAnimation = AnimationUtils.loadAnimation(this, R.anim.hide_to_bottom);
         mShowAnimation = AnimationUtils.loadAnimation(this, R.anim.show_from_bottom);
+
+        toolbar.setOnClickListener(view -> goToArticle());
+
+        commentBtn.setOnClickListener(view -> mPresenter.addComment());
+
+        goCommentBtn.setOnClickListener(view -> goToComment());
     }
 
     @Override
     public void onFingerUp() {
-        mPresenter.bottomView.showBottomView();
+        mPresenter.showBottomView();
     }
 
     @Override
     public void onFingerDown() {
-        mPresenter.bottomView.hideBottomView();
+        mPresenter.hideBottomView();
     }
 
     public boolean isHidden() {
@@ -104,6 +125,16 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter> implements A
             playShowAnimation();
             bottomContent.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void goToComment() {
+        nestedScrollView.post(() -> nestedScrollView.smoothScrollTo(0, commentView.getTop()));
+    }
+
+    @Override
+    public void goToArticle() {
+        nestedScrollView.post(() -> nestedScrollView.smoothScrollTo(0, articleView.getTop()));
     }
 
     @Override

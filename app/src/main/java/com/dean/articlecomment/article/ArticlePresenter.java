@@ -116,7 +116,7 @@ public class ArticlePresenter extends RxPresenter implements ArticleContract.Pre
 
                     @Override
                     public void onError(Throwable e) {
-
+                        // 加载失败操作 todo
                     }
 
                     @Override

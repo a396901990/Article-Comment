@@ -85,7 +85,7 @@ public class ArticlePresenter extends RxPresenter implements ArticleContract.Pre
     @Override
     public void onLoadingArticle() {
         if (articleView.isActive())
-            articleView.showArticle("https://www.baidu.com");
+            articleView.showArticle("https://github.com/a396901990");
     }
 
     @Override
@@ -96,7 +96,7 @@ public class ArticlePresenter extends RxPresenter implements ArticleContract.Pre
                     @Override
                     public void call(Subscriber<? super ArrayList<ArticleComment>> subscriber) {
                         ArrayList<ArticleComment> comments = new ArrayList<ArticleComment>();
-                        for (int i = 0; i < 15; i++) {
+                        for (int i = 0; i < 10; i++) {
                             ArticleComment newComment = new ArticleComment();
                             newComment.userName = "游客" + i;
                             newComment.commentContent = "他很懒什么都没说。";
@@ -136,7 +136,7 @@ public class ArticlePresenter extends RxPresenter implements ArticleContract.Pre
                     @Override
                     public void call(Subscriber<? super ArrayList<ArticleComment>> subscriber) {
                         ArrayList<ArticleComment> comments = new ArrayList<ArticleComment>();
-                        for (int i = 0; i < 15; i++) {
+                        for (int i = 0; i < 5; i++) {
                             ArticleComment newComment = new ArticleComment();
                             newComment.userName = "游客" + i;
                             newComment.commentContent = "他很懒什么都没说。";

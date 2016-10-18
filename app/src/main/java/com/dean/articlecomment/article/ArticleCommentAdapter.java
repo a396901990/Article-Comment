@@ -31,7 +31,8 @@ public class ArticleCommentAdapter extends RecyclerView.Adapter<ArticleCommentAd
         viewHolder.deleteComment.setOnClickListener(view -> {
             datas.remove(position);
             notifyItemRemoved(position);
-            notifyItemRangeChanged(position, datas.size());
+//            notifyItemRangeChanged(position, datas.size());
+            notifyItemChanged(position);
         });
     }
     //获取数据的数量

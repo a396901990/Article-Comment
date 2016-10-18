@@ -1,5 +1,14 @@
 # Article-Comment
 
+##简介
+Demo的实现由两部分组成，一部分用于显示网页的webview（[腾讯的X5WebView](http://x5.tencent.com)），另一部分是用于显示评论的RecycleView（根据[XRecyclerView](https://github.com/jianghejie/XRecyclerView)改造）。
+
+并应用了*MVP*模式，*Dagger2*、*RxJava*、*butterknife*开源框架。效果图如下：
+
+![demo](/screenshot/screenshot.gif) 
+## 集成 Integrate
+*  添加一个dependency到你的`build.gradle` 
+
 ##MVP
 [JessYanCoding/MVPArms](https://github.com/JessYanCoding/MVPArms)
 
